@@ -15,4 +15,6 @@ public class Node
     public int? ParentId { get; set; }
     [Required]
     public List<Node> Children { get; set; } = [];
+    
+    public List<Sample> Samples { get; set; } = [];
 }

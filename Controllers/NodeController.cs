@@ -9,7 +9,7 @@ public class NodeController(INodeService nodeService) : BaseController
 {
 
     [HttpGet]
-    [Route("/api/nodes")]
+    [Route("/api/Nodes")]
     public async Task<IActionResult> GetNodes()
     {
         var nodes = await nodeService.GetNodesAsync();
