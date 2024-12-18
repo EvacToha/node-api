@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
+using System.Text.Json; 
 using System.Text.Json.Serialization;
 
 namespace NodeApl.API.Domain.Entities;
@@ -13,12 +13,11 @@ public class Sample
     [Required]
     [JsonConverter(typeof(CreateDateConverter))]
     public DateTime CreateDate { get; set; }
-    [Required] 
+    [Required] [MaxLength(20)] 
     public string CreatedBy { get; set; } = "";
     [Required] 
     public int NodeId { get; set; }
-    [Required]
-    public Node Node { get; set; } = null!;
+    
     
 }
 
@@ -33,4 +32,4 @@ public class CreateDateConverter : JsonConverter<DateTime>
     {
         return DateTime.ParseExact(reader.GetString()!, Format, null);
     }
-}
+}    

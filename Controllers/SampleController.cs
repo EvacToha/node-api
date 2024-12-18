@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NodeApl.API.Controllers.Constants;
 using NodeApl.API.Domain.Interfaces;
 
 namespace NodeApl.API.Controllers;
 
+[Authorize]
 public class SampleController(ISampleService sampleService) : BaseController
 {
-    
     [HttpGet(RouteNames.NodeId)]
     public async Task<IActionResult> GetSamplesByNodeId([FromRoute] int nodeId)
     {
