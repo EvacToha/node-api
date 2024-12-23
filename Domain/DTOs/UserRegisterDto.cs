@@ -1,8 +1,25 @@
-﻿namespace NodeApl.API.Domain.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace NodeApl.API.Domain.DTOs;
+
+/// <summary>
+/// Пользователь
+/// </summary>
 public class UserRegisterDto
 {
-    public string UserName { get; set; }
-    public string Name { get; set; }
+    /// <summary>
+    /// Логин
+    /// </summary>
+    [Required]
+    public string Login { get; set; }
+    /// <summary>
+    /// Пароль
+    /// </summary>
+    [Required]
     public string Password { get; set; }
+    /// <summary>
+    /// Имя
+    /// </summary>
+    [Required]
+    public string FullName { get; set; }
 }

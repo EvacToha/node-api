@@ -1,9 +1,9 @@
-﻿using NodeApl.API.Domain.Entities;
+﻿using NodeApl.API.Domain.DTOs;
 
 namespace NodeApl.API.Domain.Interfaces;
 
 public interface ISampleService
 {
-    Task<IEnumerable<Sample>> GetSamplesByNodeIdAsync(int nodeId);
-    Task<IEnumerable<Sample>> GetSamplesByNodeIdsAsync(IEnumerable<int> nodeIds);
+    Task<IEnumerable<SampleDto>> GetSamplesByNodeIdAsync(int nodeId);
+    Task<IEnumerable<SampleDto>> GetSamplesByNodeIdsAsync(IEnumerable<int> nodeIds);
 }

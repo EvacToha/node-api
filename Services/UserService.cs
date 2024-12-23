@@ -14,42 +14,59 @@ public class UserService(IUserRepository userRepository, IConfiguration configur
 {
     private readonly PasswordHasher<object> _passwordHasher = new();
     
-    public async Task<UserRegisterResponse> RegisterUserAsync(UserRegisterDto userDto)
+    public async Task<RegisterResponse> RegisterAsync(UserRegisterDto userDto)
     {
-        var existedUser = await userRepository.GetUserByUsernameAsync(userDto.UserName);
+        
+        var existedUser = await userRepository.GetUserByUsernameAsync(userDto.Login);
         if (existedUser != null)
         {
-            return new UserRegisterResponse{Success = false, Message = "Пользователь уже зарегестрирован." };
+            return new RegisterResponse{Success = false, Message = "Пользователь уже зарегестрирован." };
         }
         
         var hashedPassword = _passwordHasher.HashPassword(null!, userDto.Password);
+        try
+        {
+            await userRepository.AddAsync(new User
+            {
+                Login = userDto.Login,
+                FullName = userDto.FullName,
+                PasswordHash = hashedPassword
+            });
+            var result = await userRepository.SaveChangesAsync();
+            
+            if (result > 0)
+            {
+                return new RegisterResponse{Success = true, Message = "Пользователь успешно зарегистрирован."};
+            }
+            
+            return new RegisterResponse{Success = false, Message = "Ошибка при регистрации пользователя. Попробуйте позже."};
+            
+            
+        }
+        catch (Exception ex)
+        {
+            return new RegisterResponse{Success = false, Message = "Ошибка при регистрации пользователя." };
+        }
         
-        await userRepository.AddUserAsync(new User {
-            Username = userDto.UserName,
-            Name = userDto.Name, 
-            PasswordHash = hashedPassword
-        });
-        
-        return new UserRegisterResponse{Success = true, Message = "Пользователь успешно зарегистрирован."};
     }
 
-    public async Task<UserLoginResponse> LoginUserAsync(UserLoginDto userDto)
+    public async Task<LoginResponse> LoginAsync(UserLoginDto userDto)
     {
-        var user = await userRepository.GetUserByUsernameAsync(userDto.UserName);
+        var user = await userRepository.GetUserByUsernameAsync(userDto.Login);
         if (user == null)
         {
-            return new UserLoginResponse{Success = false, Message = "Пользователя не существует." };
+            return new LoginResponse{Success = false, Message = "Пользователя не существует." };
         }
         
         var result = _passwordHasher.VerifyHashedPassword(null!, user.PasswordHash, userDto.Password);
         if (result == PasswordVerificationResult.Failed)
         {
-            return new UserLoginResponse{Success = false, Message = "Неверный пароль." };
+            return new LoginResponse{Success = false, Message = "Неверный пароль." };
         }
         
         var token = GenerateJwtToken(user);
 
-        return new UserLoginResponse{Success = true, Message = "Успешный вход.", Token = token };
+        return new LoginResponse{Success = true, Message = "Успешный вход.", Token = token };
         
     }
     
@@ -57,8 +74,8 @@ public class UserService(IUserRepository userRepository, IConfiguration configur
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Username),
-            new Claim(ClaimTypes.Name, user.Name)
+            new Claim(JwtRegisteredClaimNames.Sub, user.Login),
+            new Claim(ClaimTypes.Name, user.FullName)
         };
     
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));

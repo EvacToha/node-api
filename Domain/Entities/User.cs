@@ -9,11 +9,11 @@ public class User
     
     [Required]
     [MaxLength(20)]
-    public string Username { get; set; }
+    public string Login { get; set; }
     
     [Required] 
     [MaxLength(20)]
-    public string Name { get; set; }
+    public string FullName { get; set; }
     
     [Required] 
     public string PasswordHash { get; set; }

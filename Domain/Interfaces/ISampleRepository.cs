@@ -1,9 +1,10 @@
-﻿using NodeApl.API.Domain.Entities;
+﻿using NodeApl.API.Domain.DTOs;
+using NodeApl.API.Domain.Entities;
 
 namespace NodeApl.API.Domain.Interfaces;
 
-public interface ISampleRepository
+public interface ISampleRepository : IRepository<Sample>
 {
-    Task<IEnumerable<Sample>> GetSamplesByNodeIdAsync(int nodeId);
-    Task<IEnumerable<Sample>> GetSamplesByNodeIdsAsync(IEnumerable<int> nodeIds);
+    Task<IEnumerable<SampleDto>> GetSamplesByNodeIdAsync(int nodeId);
+    Task<IEnumerable<SampleDto>> GetSamplesByNodeIdsAsync(IEnumerable<int> nodeIds);
 }

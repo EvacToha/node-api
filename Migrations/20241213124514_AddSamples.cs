@@ -57,7 +57,7 @@ namespace NodeApl.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Nodes",
-                columns: new[] { "Id", "Name", "ParentId", "Type" },
+                columns: new[] { "Id", "FullName", "ParentId", "Type" },
                 values: new object[,]
                 {
                     { 1, "Шаблоны", null, "Шаблон" },
@@ -76,7 +76,7 @@ namespace NodeApl.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Samples",
-                columns: new[] { "Id", "CreateDate", "CreatedBy", "Name", "NodeId" },
+                columns: new[] { "Id", "CreateDate", "CreatedBy", "FullName", "NodeId" },
                 values: new object[,]
                 {
                     { 1, new DateTime(2024, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Антон", "Описание Шаблона 1", 4 },

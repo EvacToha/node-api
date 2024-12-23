@@ -5,14 +5,13 @@ using NodeApl.API.Domain.Interfaces;
 
 namespace NodeApl.API.Services;
 
-public class NodeService(INodeRepository nodeRepository) : INodeService
+public class NodeService(IRepository<Node> nodeRepository) : INodeService
 {
     
-    private List<NodeDto> ConvertToDto(IEnumerable<Node> nodes)
+    private static List<NodeDto> ConvertToDto(IEnumerable<Node> nodes)
     {
         return nodes.Select(node => new NodeDto
         {
-            Id = node.Id,
             Name = node.Name,
             Type = node.Type,
             Children = ConvertToDto(node.Children) 
@@ -21,7 +20,7 @@ public class NodeService(INodeRepository nodeRepository) : INodeService
     
     public async Task<IEnumerable<NodeDto>> GetNodesAsync()
     {
-        var nodes = await nodeRepository.GetNodesAsync();
+        var nodes = await nodeRepository.GetAllAsync();
 
         var nodesDto = ConvertToDto(nodes.Where(node => node.ParentId == null));
         

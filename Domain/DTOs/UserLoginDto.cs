@@ -1,7 +1,20 @@
-﻿namespace NodeApl.API.Domain.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace NodeApl.API.Domain.DTOs;
+
+/// <summary>
+/// Пользователь
+/// </summary>
 public class UserLoginDto
 {
-    public string UserName { get; set; }
+    /// <summary>
+    /// Логин
+    /// </summary>
+    [Required]
+    public string Login { get; set; }
+    /// <summary>
+    /// Пароль
+    /// </summary>
+    [Required]
     public string Password { get; set; }
 }

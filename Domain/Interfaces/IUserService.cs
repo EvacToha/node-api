@@ -5,6 +5,6 @@ namespace NodeApl.API.Domain.Interfaces;
 
 public interface IUserService
 {
-    Task<UserRegisterResponse> RegisterUserAsync(UserRegisterDto userDto);
-    Task<UserLoginResponse> LoginUserAsync(UserLoginDto userDto);
+    Task<RegisterResponse> RegisterAsync(UserRegisterDto userDto);
+    Task<LoginResponse> LoginAsync(UserLoginDto userDto);
 }

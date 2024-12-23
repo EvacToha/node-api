@@ -2,8 +2,7 @@
 
 namespace NodeApl.API.Domain.Interfaces;
 
-public interface IUserRepository
+public interface IUserRepository : IRepository<User>
 {
-    Task AddUserAsync(User user);
     Task<User?> GetUserByUsernameAsync(string username);
 }

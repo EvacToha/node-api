@@ -4,32 +4,42 @@ using System.Text.Json.Serialization;
 
 namespace NodeApl.API.Domain.Entities;
 
+/// <summary>
+/// Элемент выборки
+/// </summary>
 public class Sample
 {
+    /// <summary>
+    /// Ид
+    /// </summary>
     [Key]
     public int Id { get; set; }
+    /// <summary>
+    /// Имя элемента
+    /// </summary>
     [Required] [MaxLength(20)] 
     public string Name { get; set; } = "";
+    /// <summary>
+    /// Дата создания
+    /// </summary>
     [Required]
-    [JsonConverter(typeof(CreateDateConverter))]
     public DateTime CreateDate { get; set; }
-    [Required] [MaxLength(20)] 
-    public string CreatedBy { get; set; } = "";
+    /// <summary>
+    /// Узел
+    /// </summary>
+    
     [Required] 
     public int NodeId { get; set; }
     
+    /// <summary>
+    /// Ид пользователя
+    /// </summary>
+    /// 
+    [Required] 
+    public int UserId { get; set; }
+    /// <summary>
+    /// Пользователь
+    /// </summary>
+    public User User { get; set; }
     
 }
-
-public class CreateDateConverter : JsonConverter<DateTime>
-{
-    private const string Format = "yyyy-MM-dd";
-    public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
-    {
-        writer.WriteStringValue(value.ToString(Format));
-    }
-    public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-    {
-        return DateTime.ParseExact(reader.GetString()!, Format, null);
-    }
-}    
