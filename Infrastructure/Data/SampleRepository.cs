@@ -27,4 +27,9 @@ public class SampleRepository(AppDbContext dbContext, IMapper mapper) : Reposito
             .ProjectTo<SampleDto>(mapper.ConfigurationProvider)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<Sample>> GetSamplesByIdsAsync(IEnumerable<int> ids)
+    {
+        return await dbContext.Samples.Where(s => ids.Contains(s.Id)).ToListAsync();
+    }
 }

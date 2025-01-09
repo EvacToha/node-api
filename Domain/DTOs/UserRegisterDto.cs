@@ -2,24 +2,16 @@
 
 namespace NodeApl.API.Domain.DTOs;
 
-/// <summary>
-/// Пользователь
-/// </summary>
 public class UserRegisterDto
 {
-    /// <summary>
-    /// Логин
-    /// </summary>
+   
     [Required]
+    [MinLength(5)]
     public string Login { get; set; }
-    /// <summary>
-    /// Пароль
-    /// </summary>
+    
     [Required]
+    [RegularExpression(@"^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$")]
     public string Password { get; set; }
-    /// <summary>
-    /// Имя
-    /// </summary>
     [Required]
     public string FullName { get; set; }
 }

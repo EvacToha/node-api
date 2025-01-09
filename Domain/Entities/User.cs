@@ -7,12 +7,10 @@ public class User
     [Key]
     public int Id { get; set; }
     
-    [Required]
-    [MaxLength(20)]
+    [Required] [MaxLength(20)]
     public string Login { get; set; }
     
-    [Required] 
-    [MaxLength(20)]
+    [Required] [MaxLength(20)]
     public string FullName { get; set; }
     
     [Required] 

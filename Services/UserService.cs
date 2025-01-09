@@ -17,7 +17,7 @@ public class UserService(IUserRepository userRepository, IConfiguration configur
     public async Task<RegisterResponse> RegisterAsync(UserRegisterDto userDto)
     {
         
-        var existedUser = await userRepository.GetUserByUsernameAsync(userDto.Login);
+        var existedUser = await userRepository.GetUserByLoginAsync(userDto.Login);
         if (existedUser != null)
         {
             return new RegisterResponse{Success = false, Message = "Пользователь уже зарегестрирован." };
@@ -52,7 +52,7 @@ public class UserService(IUserRepository userRepository, IConfiguration configur
 
     public async Task<LoginResponse> LoginAsync(UserLoginDto userDto)
     {
-        var user = await userRepository.GetUserByUsernameAsync(userDto.Login);
+        var user = await userRepository.GetUserByLoginAsync(userDto.Login);
         if (user == null)
         {
             return new LoginResponse{Success = false, Message = "Пользователя не существует." };

@@ -9,9 +9,15 @@ public class AppMappingProfile : Profile
     public AppMappingProfile()
     {
         CreateMap<Sample, SampleDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.CreateDate, opt => opt.MapFrom(src => src.CreateDate))
             .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
             .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.User.FullName));
+        
+        CreateMap<SampleAddDto, Sample>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.CreateDate, opt => opt.MapFrom(src => src.CreateDate))
+            .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId));
     }
 }

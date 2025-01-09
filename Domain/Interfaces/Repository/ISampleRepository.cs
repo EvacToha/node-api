@@ -7,4 +7,5 @@ public interface ISampleRepository : IRepository<Sample>
 {
     Task<IEnumerable<SampleDto>> GetSamplesByNodeIdAsync(int nodeId);
     Task<IEnumerable<SampleDto>> GetSamplesByNodeIdsAsync(IEnumerable<int> nodeIds);
+    Task<IEnumerable<Sample>> GetSamplesByIdsAsync(IEnumerable<int> ids);
 }

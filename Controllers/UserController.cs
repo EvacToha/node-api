@@ -66,6 +66,7 @@ public class UserController(IUserService userService) : BaseController
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] UserLoginDto model)
     {
+        
         var result = await userService.LoginAsync(model);
         if (!result.Success)
         {

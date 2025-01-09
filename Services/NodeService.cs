@@ -12,6 +12,7 @@ public class NodeService(IRepository<Node> nodeRepository) : INodeService
     {
         return nodes.Select(node => new NodeDto
         {
+            Id = node.Id,
             Name = node.Name,
             Type = node.Type,
             Children = ConvertToDto(node.Children) 
